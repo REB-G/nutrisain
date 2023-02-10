@@ -1,0 +1,15 @@
+@use "../utils/_main" as utils
+
+.button
+    border-radius: 1.5rem
+    padding: 0.5rem 1.5rem
+    font-weight: 500
+    transition: 0.5s ease-in
+
+    &__green
+        background-color: utils.$beige
+        color: utils.$maroon
+
+        &:hover
+            background-color: utils.$green
+            color: utils.$beige

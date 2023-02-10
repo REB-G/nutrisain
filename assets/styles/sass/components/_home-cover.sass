@@ -1,0 +1,68 @@
+@use "../utils/_main" as utils
+    
+.home__cover
+    text-align: center
+    padding: 3rem
+
+    &--title
+        @extend %title-1
+        color: utils.$red
+
+    &--description
+        @extend %paragraphe-l
+        margin-top: 2rem
+
+.home-about
+    margin: 3rem
+
+    &__title
+        @extend %title-2
+        color: utils.$red
+        text-decoration: underline
+        text-decoration-color: utils.$maroon
+        margin-top: 1.5rem
+        text-align: center
+
+
+    &__description
+        text-align: center
+
+        &--text-presentation
+            @extend %paragraphe-l
+            margin-top: 1.5rem
+        
+        &--image
+            width: 20vw
+            margin-top: 1.5rem
+
+        &--text
+            @extend %paragraphe-l
+            margin-top: 1.5rem
+
+
+.home-services
+    margin: 3rem
+
+    &__title
+        @extend %title-2
+        color: utils.$red
+        text-decoration: underline
+        text-decoration-color: utils.$maroon
+        margin-top: 1.5rem
+        text-align: center
+
+    &__description
+        text-align: center
+
+        &--text
+            @extend %paragraphe-l
+            margin-top: 1.5rem
+        
+        &--image
+            width: 20vw
+            margin-top: 1.5rem
+        
+        &--links
+            @extend %paragraphe-l
+            text-align: center
+            margin-top: 1.5rem

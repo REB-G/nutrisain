@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nutrisain - Accueil
+{% endblock %}
+
+{% block body %}
+	<section class="home__cover">
+		<h1 class="home__cover--title">Bienvenue chez Nutrisain !</h1>
+		<p class="home__cover--description">Ici vous découvrirez comment manger sain et bon pour vous sentir bien !</p>
+	</section>
+
+	<section class="home-about">
+		<h2 class="home-about__title">À propos</h2>
+		<div class="home-about__description">
+			<p class="home-about__description--text-presentation">
+				Le société Nutrisain a été créé par moi-même, diététicienne-nutritionniste diplômée d'État.</br>
+				Grâce à ce site, je donnes des conseils et des recettes personnalisées pour vous aider à atteindre vos objectifs.</br>
+				Des recettes simples et rapides à réaliser, gourmandes et équilibrées pour vous faire plaisir tout en vous faisant du bien.
+			</p>
+			<img class="home-about__description--image" src="{{asset('build/images/cooking.jpg')}}" alt="Plan de travail avec divers produits alimentaires.">
+			<p class="home-about__description--text">
+				Se sentir bien dans son corps passe par une alimentation équilibrée et variée. </br>
+				Découvrez comment manger sain et bon pour vous sentir bien !
+			</p>
+		</div>
+	</section>
+
+	<section class="home-services">
+		<h2 class="home-services__title">Nos services</h2>
+		<div class="home-services__description">
+			<p class="home-services__description--text"> En tant que professionnelle de santé, j'effectue des consultations à mon cabinet se situant à Caen. </br>
+				Je propose des consultations à distance pour les personnes qui ne peuvent pas se déplacer.</br>
+				J'anime également des ateliers culinaires pour les particuliers et les entreprises.</br>
+				Mais ici, grâce à ce site, je vous propose un échantillon de recettes pour tous. Je vous propose également des recettes personnalisées.
+			</p>
+			<img class="home-services__description--image" src="{{asset('build/images/recipes_book.png')}}" alt="Livre de recettes de cuisine.">
+		</div>
+		<p class="home-services__description--links" href="">Retrouvez toutes mes recettes <a href="">ici !</a></br>
+		Pour des recettes personnalisées, <a href="">inscrivez-vous !</a></p>
+	</section>
+
+{% endblock %}
