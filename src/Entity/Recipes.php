@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RecipesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -52,10 +54,26 @@ class Recipes
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\ManyToMany(targetEntity: Diets::class, inversedBy: 'recipe')]
+    private Collection $diet;
+
+    #[ORM\ManyToOne(inversedBy: 'recipe')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Difficulties $difficulty = null;
+
+    #[ORM\ManyToOne(inversedBy: 'recipe')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categories $category = null;
+
+    #[ORM\ManyToMany(targetEntity: Allergies::class, inversedBy: 'recipe')]
+    private Collection $allergy;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+        $this->diet = new ArrayCollection();
+        $this->allergy = new ArrayCollection();
     }
 
     public function preUpdatedAt(): void
@@ -184,6 +202,72 @@ class Recipes
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getDiet(): Collection
+    {
+        return $this->diet;
+    }
+
+    public function addDiet(Diets $diet): self
+    {
+        if (!$this->diet->contains($diet)) {
+            $this->diet->add($diet);
+        }
+
+        return $this;
+    }
+
+    public function removeDiet(Diets $diet): self
+    {
+        $this->diet->removeElement($diet);
+
+        return $this;
+    }
+
+    public function getDifficulty(): ?Difficulties
+    {
+        return $this->difficulty;
+    }
+
+    public function setDifficulty(?Difficulties $difficulty): self
+    {
+        $this->difficulty = $difficulty;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Categories
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Categories $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getAllergy(): Collection
+    {
+        return $this->allergy;
+    }
+
+    public function addAllergy(Allergies $allergy): self
+    {
+        if (!$this->allergy->contains($allergy)) {
+            $this->allergy->add($allergy);
+        }
+
+        return $this;
+    }
+
+    public function removeAllergy(Allergies $allergy): self
+    {
+        $this->allergy->removeElement($allergy);
 
         return $this;
     }

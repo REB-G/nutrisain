@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -50,10 +52,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\ManyToMany(targetEntity: Allergies::class, inversedBy: 'user')]
+    private Collection $allergy;
+
+    #[ORM\ManyToMany(targetEntity: Diets::class, inversedBy: 'user')]
+    private Collection $diet;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+        $this->allergy = new ArrayCollection();
+        $this->diet = new ArrayCollection();
     }
 
     public function preUpdatedAt(): void
@@ -169,6 +179,48 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getAllergy(): Collection
+    {
+        return $this->allergy;
+    }
+
+    public function addAllergy(Allergies $allergy): self
+    {
+        if (!$this->allergy->contains($allergy)) {
+            $this->allergy->add($allergy);
+        }
+
+        return $this;
+    }
+
+    public function removeAllergy(Allergies $allergy): self
+    {
+        $this->allergy->removeElement($allergy);
+
+        return $this;
+    }
+
+    public function getDiet(): Collection
+    {
+        return $this->diet;
+    }
+
+    public function addDiet(Diets $diet): self
+    {
+        if (!$this->diet->contains($diet)) {
+            $this->diet->add($diet);
+        }
+
+        return $this;
+    }
+
+    public function removeDiet(Diets $diet): self
+    {
+        $this->diet->removeElement($diet);
 
         return $this;
     }

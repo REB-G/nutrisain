@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DifficultiesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -18,6 +20,14 @@ class Difficulties
     #[Assert\NotBlank(message: 'Veuillez renseigner un nom de difficulté.')]
     private ?string $name = null;
 
+    #[ORM\OneToMany(mappedBy: 'difficulty', targetEntity: Recipes::class)]
+    private Collection $recipe;
+
+    public function __construct()
+    {
+        $this->recipe = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -31,6 +41,33 @@ class Difficulties
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getRecipe(): Collection
+    {
+        return $this->recipe;
+    }
+
+    public function addRecipe(Recipes $recipe): self
+    {
+        if (!$this->recipe->contains($recipe)) {
+            $this->recipe->add($recipe);
+            $recipe->setDifficulty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipes $recipe): self
+    {
+        if ($this->recipe->removeElement($recipe)) {
+            // set the owning side to null (unless already changed)
+            if ($recipe->getDifficulty() === $this) {
+                $recipe->setDifficulty(null);
+            }
+        }
 
         return $this;
     }
